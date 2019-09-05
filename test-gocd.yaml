@@ -1,0 +1,29 @@
+format_version: 3
+environments:
+  test:
+    environment_variables:
+      DEPLOYMENT_PASSWORD: "deployer123"
+      DEPLOYMENT_USER: "deployer"
+    pipelines:
+      - mypipe1
+    agents:
+      - 5462c934-c2f4-4c7e-96a8-a623b4b8932b
+pipelines:
+  mypipe1: 
+    group: mygroup
+    label_template: "${mygit[:8]}"
+    lock_behavior: none
+    materials:
+      mygit:
+        git: https://github.com/adityasood/gocd-yaml-config-example.git
+    stages:
+      - build:
+          clean_workspace: true
+          jobs:
+            csharp:
+              tasks: # ordered list of tasks to execute in job csharp
+               - exec:
+                   command: /bin/bash
+                   arguments:
+                    - "-c"
+                    - "sleep 500"

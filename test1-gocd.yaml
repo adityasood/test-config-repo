@@ -1,0 +1,36 @@
+environments:
+  testing:
+    pipelines:
+      - aditya-test-pipeline
+    agents:
+      - d6505da3-cbad-475a-ae64-9a647eaa8567
+pipelines:
+  aditya-test-pipeline:
+    group: go-cd
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git:
+        git: https://github.com/adityasood/licensemgmt.git
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - stage-1:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+        jobs:
+          job-1:
+            timeout: 0
+            secure_variables:
+              testing: l4uWwU7WMV4=
+            tasks:
+            - exec:
+                arguments:
+                - "$testing"
+                command: echo
+                run_if: passed
