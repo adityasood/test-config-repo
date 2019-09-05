@@ -11,7 +11,7 @@ environments:
 pipelines:
   mypipe1: 
     group: mygroup
-    label_template: "${mygit[:8]}"
+    label_template: ${COUNT}
     lock_behavior: none
     materials:
       mygit:
