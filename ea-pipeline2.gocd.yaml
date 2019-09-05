@@ -1,5 +1,5 @@
 pipelines:
-  ea-pipeline1:
+  ea-pipeline2:
     group: simple
     materials:
       mygit:  # this is the name of material
@@ -9,7 +9,10 @@ pipelines:
       - build: # name of stage
           jobs:
             build: # name of the job
-              elastic_profile_id: "k8-ea"
+              elastic_profile_id: "docker-ea"
               tasks:
                - exec: # indicates type of task
-                   command: ls
+                   command: /bin/bash
+                   arguments:
+                    - "-c"
+                    - "sleep 500"
