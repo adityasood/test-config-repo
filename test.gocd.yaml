@@ -7,7 +7,7 @@ environments:
     pipelines:
       - mypipe1
     agents:
-      - 5462c934-c2f4-4c7e-96a8-a623b4b8932b
+      - bcb9e13f-fb78-48f6-ac30-d6ac69459db6
 pipelines:
   mypipe1: 
     group: mygroup
