@@ -6,8 +6,6 @@ environments:
       DEPLOYMENT_USER: "deployer"
     pipelines:
       - mypipe1
-    agents:
-      - bcb9e13f-fb78-48f6-ac30-d6ac69459db6
 pipelines:
   mypipe1: 
     group: mygroup
