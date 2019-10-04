@@ -1,9 +1,3 @@
-environments:
-  testing:
-    pipelines:
-      - aditya-test-pipeline
-    agents:
-      - d6505da3-cbad-475a-ae64-9a647eaa8567
 pipelines:
   aditya-test-pipeline:
     group: go-cd
