@@ -1,0 +1,95 @@
+format_version: 2
+environments:
+  Dev-env:
+    pipelines:
+      - MuleSoft-Yaml-th-ws-integration_cle.2.0.0-pipeline
+pipelines:
+  MuleSoft-Yaml-th-ws-integration_cle.2.0.0-pipeline:
+    group: MuleSoft
+    materials:
+      mygit:  # this is the name of material
+        # says about type of material and url at once.
+        #git: ssh://git@10.0.1.42:7999/bi/th-webservices-integration.git
+        git: ssh://git@git.bitbucket.cloud.thdm.local:7999/bi/th-ws-integration_cle2.0.0.git
+        branch: master
+        auto_update: true
+    stages:
+      - staticCodeAnalysisStage: # name of stage
+          jobs:
+            sonarAnalysisJob: # name of the job
+              tasks:
+                - exec: # indicates type of task
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - mvn sonar:sonar -Dsonar.host.url=https://code-quality.prod.cloud.thdm.local -Dsonar.login=XXXXXX -Dsonar.projectKey=BI_ws_cle -Dsonar.projectName=th-ws-integration_cle2.0.0 -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.mule.binaries=. -Dsonar.exclusions=reports/**,target/**
+                - exec: # indicates type of task.
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - sleep 10
+                - exec: # indicates type of task
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - curl -k -X GET -i -u 'XXXXXX:' 'https://code-quality.prod.cloud.thdm.local/api/qualitygates/project_status?projectKey=BI_ws_cle' | cut -d '{' -f 3 | cut -d ':' -f 2 | cut -d ',' -f 1 | grep -c "OK"
+      - prodStage: # name of stage
+          jobs:
+            prodJob: # name of the job
+              tasks:
+                - exec: # indicates type of task
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - mvn clean test -Dmule.env=dev -Denv=dev -Dsecret.key=mulesoft
+              artifacts:
+                - build:
+                    source: target/site/munit/coverage/summary.html
+                - build:
+                    source: target/site/munit/coverage/munit-coverage.json
+                - build:
+                    source: target/site/munit/coverage/temasek-integration-cle-report.html
+                # Number of files mentioned below and their names(filename-report.html) depend on the XML files in the src/main/mule folder
+               
+                - build:
+                    source: target/site/munit/coverage/exception-handling-report.html
+                - build:
+                    source: target/site/munit/coverage/employee-main-report.html
+                - build:
+                    source: target/site/munit/coverage/investment-main-report.html
+                - build:
+                    source: target/site/munit/coverage/payment-main-report.html
+      - buildStage: # name of stage
+          jobs:
+            buildJob: # name of the job
+              tasks:
+                - exec: # indicates type of task
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - mvn install -DskipMunitTests
+      - jfrogDeployStage: # name of stage
+          jobs:
+            deployJob: # name of the job
+              tasks:
+                - exec: # indicates type of task
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - mvn deploy -DskipMunitTests -DskipInstall -Djfrog.repo.host=repo.prod.cloud.thdm.local -Djfrog.repo.url=https://repo.prod.cloud.thdm.local/artifactory/mulesoft-java-prod -P jfrogDeploy
+      - cloudhubDeployStage: # name of stage
+          jobs:
+            deployJob: # name of the job
+              tasks:
+                - exec: # indicates type of task
+                    run_if: passed
+                    command: bash
+                    arguments:
+                    - -c
+                    - mvn deploy -DmuleDeploy -DskipMunitTests -DskipInstall -DpublishKafkaFlag=false -Dloglevel=INFO -Dmule.env=dev -Dcle.env=Development -DSecretKey=mulesoft -DsslClientVerify=SUCCESS -Denv=dev -Danypoint.client_id=XXXXXXX -Danypoint.client_secret=XXXXX -Danypoint.environment=Development -Danypoint.server=cloudhub-non-prod -Danypoint.businessGroup="Compaz\Temasek Holding Pte Ltd\BG-BEAMS" -P cloudDevDeploy
