@@ -1,0 +1,159 @@
+format_version: 3
+pipelines:
+  pipeline1:
+    group: first
+    label_template: ${COUNT}
+    lock_behavior: lockOnFailure
+    tracking_tool:
+      link: https://blah.com/${ID}
+      regex: (+d)*
+    display_order: -1
+    timer:
+      spec: 0 0 22 ? * *
+      only_on_changes: true
+    environment_variables:
+      plain1: value1
+      plain2: value2
+    secure_variables:
+      admin: AES:1PaiLQnpdzoknufcCdiJkA==:sI5UrvFmFJDvmN0NEzu8nQ==
+    materials:
+      git1:
+        git: https://github.com/someone/someproject
+        username: username
+        shallow_clone: true
+        auto_update: true
+        branch: master
+        destination: dest
+        encrypted_password: AES:xdrx/ilIq0/v7gFwnLJHIA==:s4GuvBFK8UL/vTzU1IqzNw==
+      pipeline-material:
+        ignore_for_scheduling: true
+        pipeline: up42
+        stage: up42_stage
+      subversion-1:
+        svn: https://subversion.url.com
+        username: admin
+        check_externals: true
+        auto_update: true
+        destination: dest-2
+        encrypted_password: AES:21RibmgqKr0PgZ46U3qngA==:/tX6KLB2t5RKJBSyfFGQcw==
+      perforce:
+        p4: https://perforceserver:567
+        username: admin
+        use_tickets: true
+        view: this-is-a-very-pretty-perforce-view
+        auto_update: true
+        destination: dest-3
+        encrypted_password: AES:9TANv/PaURebkL0ptKmzQQ==:1q/T4xYc8MZjTPdrBQndMw==
+      mercurial:
+        hg: https://mercurialserver.com
+        username: admin
+        auto_update: true
+        branch: awesome
+        destination: dest-4
+        encrypted_password: AES:Xk7kcmDfGQ1lV6iVc3/T0g==:3/PY8d7OaWV29auuwiJwiQ==
+      github-pr:
+        scm: b787b203-091c-4fbf-881d-8b7d60b3f184
+        blacklist:
+        - blha/*
+        destination: adsf-23
+      npmjs_express:
+        package: 513068fa-04b6-4093-82c1-1ea264eea07b
+    stages:
+    - stage:
+        fetch_materials: true
+        keep_artifacts: true
+        clean_workspace: true
+        approval:
+          type: success
+          allow_only_on_success: true
+          roles:
+          - xyz
+          users:
+          - jez
+        environment_variables:
+          env11: value11
+        secure_variables:
+          admin: AES:Sg3qhHAbAvgnEcFRLW0Csw==:d+e9SFOnrXn9ittPZRrX4Q==
+        jobs:
+          job:
+            timeout: 10
+            environment_variables:
+              env1: value1
+            secure_variables:
+              admin: AES:/UmQCc+mLmct5zf9lp5jig==:XEaWlN6/Gmf1CLyqR27W/w==
+            tabs:
+              tab1: /path/to/home
+              tab2: /path/to/home/again
+            resources:
+            - chrome
+            - firefox
+            - linux
+            artifacts:
+            - build:
+                source: build-src
+                destination: dest
+            - test:
+                source: test-src
+                destination: testoutput
+            - external:
+                id: blah
+                store_id: store
+                configuration:
+                  options:
+                    BuildFile: ''
+                    Tag: ''
+                    Image: some-image
+            tasks:
+            - exec:
+                on_cancel:
+                  exec:
+                    arguments:
+                    - -f
+                    - java
+                    command: pkill
+                    working_directory: something
+                    run_if: passed
+                arguments:
+                - -alh
+                command: ls
+                working_directory: something
+                run_if: failed
+            - fetch:
+                on_cancel:
+                  exec:
+                    arguments:
+                    - -alh
+                    command: ls
+                    working_directory: something
+                    run_if: passed
+                is_file: true
+                source: asfd
+                destination: ''
+                pipeline: up42
+                stage: up42_stage
+                job: up42_job
+                run_if: passed
+            - plugin:
+                on_cancel:
+                  exec:
+                    arguments:
+                    - -alhg
+                    command: ls
+                    working_directory: asdfa
+                    run_if: passed
+                configuration:
+                  id: gradle.task.plugin
+                  version: '1'
+                options:
+                  GradleHome: ''
+                  Tasks: asdf
+                  Daemon: 'true'
+                  UseWrapper: 'true'
+                  MakeWrapperExecutable: 'true'
+                  Offline: 'true'
+                  Debug: 'true'
+                  AdditionalOptions: something:is-awesome
+                run_if: passed
+    parameters:
+      param1: value1
+      param2: value2
