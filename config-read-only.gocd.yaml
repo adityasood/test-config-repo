@@ -15,7 +15,7 @@ pipelines:
       plain1: value1
       plain2: value2
     secure_variables:
-      admin: AES:1PaiLQnpdzoknufcCdiJkA==:sI5UrvFmFJDvmN0NEzu8nQ==
+      admin: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
     materials:
       git1:
         git: https://github.com/someone/someproject
@@ -24,7 +24,7 @@ pipelines:
         auto_update: true
         branch: master
         destination: dest
-        encrypted_password: AES:xdrx/ilIq0/v7gFwnLJHIA==:s4GuvBFK8UL/vTzU1IqzNw==
+        encrypted_password: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
       pipeline-material:
         ignore_for_scheduling: true
         pipeline: up42
@@ -35,7 +35,7 @@ pipelines:
         check_externals: true
         auto_update: true
         destination: dest-2
-        encrypted_password: AES:21RibmgqKr0PgZ46U3qngA==:/tX6KLB2t5RKJBSyfFGQcw==
+        encrypted_password: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
       perforce:
         p4: https://perforceserver:567
         username: admin
@@ -50,7 +50,7 @@ pipelines:
         auto_update: true
         branch: awesome
         destination: dest-4
-        encrypted_password: AES:Xk7kcmDfGQ1lV6iVc3/T0g==:3/PY8d7OaWV29auuwiJwiQ==
+        encrypted_password: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
       github-pr:
         scm: 001530e3-e677-4ec2-ad22-cd3520e74850
         blacklist:
@@ -73,14 +73,14 @@ pipelines:
         environment_variables:
           env11: value11
         secure_variables:
-          admin: AES:Sg3qhHAbAvgnEcFRLW0Csw==:d+e9SFOnrXn9ittPZRrX4Q==
+          admin: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
         jobs:
           job:
             timeout: 10
             environment_variables:
               env1: value1
             secure_variables:
-              admin: AES:/UmQCc+mLmct5zf9lp5jig==:XEaWlN6/Gmf1CLyqR27W/w==
+              admin: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
             tabs:
               tab1: /path/to/home
               tab2: /path/to/home/again
