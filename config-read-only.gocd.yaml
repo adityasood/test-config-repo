@@ -43,7 +43,7 @@ pipelines:
         view: this-is-a-very-pretty-perforce-view
         auto_update: true
         destination: dest-3
-        encrypted_password: AES:9TANv/PaURebkL0ptKmzQQ==:1q/T4xYc8MZjTPdrBQndMw==
+        encrypted_password: AES:7g56ajkWu8WZR/ZvNkvwug==:DFRZFGfKeMGuEXOnXy5BCA==
       mercurial:
         hg: https://mercurialserver.com
         username: admin
