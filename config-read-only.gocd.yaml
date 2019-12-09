@@ -52,12 +52,12 @@ pipelines:
         destination: dest-4
         encrypted_password: AES:Xk7kcmDfGQ1lV6iVc3/T0g==:3/PY8d7OaWV29auuwiJwiQ==
       github-pr:
-        scm: b787b203-091c-4fbf-881d-8b7d60b3f184
+        scm: 001530e3-e677-4ec2-ad22-cd3520e74850
         blacklist:
         - blha/*
         destination: adsf-23
       npmjs_express:
-        package: 513068fa-04b6-4093-82c1-1ea264eea07b
+        package: bf5cd4fa-3626-4393-b868-d653c3383d81
     stages:
     - stage:
         fetch_materials: true
