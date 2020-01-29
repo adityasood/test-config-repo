@@ -1,4 +1,4 @@
-ion: [push]
+on: [push]
 
 jobs:
   verify_config_repository:
