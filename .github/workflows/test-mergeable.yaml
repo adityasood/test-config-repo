@@ -10,6 +10,6 @@ jobs:
       - name: Verify Config Merge
         uses: GaneshSPatil/gocd-mergable@v1.0.0
         with:
-          GOCD_SERVER_URL: 'https://06dc347a.ngrok.io'
+          GOCD_SERVER_URL: 'https://06dc347a.ngrok.io/go'
           GOCD_ADMIN_ACCESS_TOKEN: ${{ secrets.GOCD_ADMIN_ACCESS_TOKEN }}
           GOCD_CONFIG_REPOSITORY_ID: 'plugin-api.go.cd-pipelines-yaml'
